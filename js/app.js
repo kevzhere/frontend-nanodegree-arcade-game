@@ -1,3 +1,4 @@
+let canvas = document.querySelector("canvas");
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -5,27 +6,29 @@ var Enemy = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+    this.locX = 50;
+    this.locY = 50;
     this.sprite = 'images/enemy-bug.png';
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+    this.locX = (this.locX + dt * 100) % 505;
+    this.render();
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), 50, 50);
+    ctx.drawImage(Resources.get(this.sprite), this.locX, this.locY);
 };
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(){
-
+    this.locX = canvas.width / 2 - 50;
+    this.locY = canvas.height / 2 + 80;
     this.sprite1 = 'images/char-boy.png';
 }
 
@@ -34,16 +37,40 @@ Player.prototype.update = function(dt){
 };
 let char;
 Player.prototype.render = function(){
-    let canvas = document.querySelector("canvas");
-    char = ctx.drawImage(Resources.get(this.sprite1), canvas.width / 2 - 50, canvas.height / 2 + 80);
+
+    char = ctx.drawImage(Resources.get(this.sprite1), this.locX, this.locY);
 }
 console.log(Player);
 Player.prototype.handleInput = function(input){
     switch(input){
         case "up":
+            if(this.locY - 85 >= 0){
+                this.locY -= 85;
+                this.render();
+            }
+                console.log("x", this.locX, "y", this.locY);
+                break;
         case "down":
+            if(this.locY + 85 <= 383){
+                this.locY += 85;
+                this.render();
+            }
+                console.log("x", this.locX, "y", this.locY);
+                break;
         case "left":
+            if(this.locX - 101 >= 0){
+                this.locX -= 101;
+                this.render();
+            }
+                console.log("x", this.locX, "y", this.locY);
+                break;
         case "right":
+            if(this.locX + 101 <= 505){
+                this.locX += 101;
+                this.render();
+            }
+                console.log("x", this.locX, "y", this.locY);
+                break;
     }
 }
 // Now instantiate your objects.
