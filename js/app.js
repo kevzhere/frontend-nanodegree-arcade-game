@@ -1,5 +1,5 @@
 let canvas = document.querySelector("canvas");
-
+let scoreKeeper = document.querySelector("#score");
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -16,6 +16,7 @@ var Enemy = function() {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
+//if enemy runs into player, player is resetted
 Enemy.prototype.update = function(dt) {
     if(this.locX >= 480){
         this.locY = 43 + ((Math.floor(Math.random() * 3) * 85));
@@ -27,6 +28,8 @@ Enemy.prototype.update = function(dt) {
         player.locY = 383;
         player.locX = 202.5;
         player.render();
+        player.score = 0;
+        scoreKeeper.textContent = player.score;
     }
 };
 
@@ -38,24 +41,29 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+//instantiate player info
 var Player = function(){
+    this.score = 0;
     this.locX = canvas.width / 2 - 50;
-
     this.locY = canvas.height / 2 + 80;
     this.sprite1 = 'images/char-boy.png';
 }
 
+//update player score and location if player reaches the end
 Player.prototype.update = function(){
     if(this.locY < 0){
         this.locY = 383;
+        this.score++;
+        scoreKeeper.textContent = this.score;
     }
 };
-let char;
-Player.prototype.render = function(){
 
-    char = ctx.drawImage(Resources.get(this.sprite1), this.locX, this.locY);
+//render player character
+Player.prototype.render = function(){
+    ctx.drawImage(Resources.get(this.sprite1), this.locX, this.locY);
 }
-console.log(Player);
+
+//player movement handler
 Player.prototype.handleInput = function(input){
     switch(input){
         case "up":
@@ -91,10 +99,13 @@ Player.prototype.handleInput = function(input){
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+//creating enemies
 var allEnemies = [];
 for(var i = 0; i < 5; i++){
     allEnemies[i] = new Enemy();
 }
+
+//creating new player
 var player = new Player();
 
 
