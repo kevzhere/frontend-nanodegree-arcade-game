@@ -45,6 +45,7 @@
             /* This URL has not been previously loaded and is not present
              * within our cache; we'll need to load this image.
              */
+            // var img = new Image();
             var img = new Image();
             img.onload = function() {
                 /* Once our image has properly loaded, add it to our cache
@@ -52,6 +53,7 @@
                  * attempts to load this file in the future.
                  */
                 resourceCache[url] = img;
+                console.log(img.height);
 
                 /* Once the image is actually loaded and properly cached,
                  * call all of the onReady() callbacks we have defined.

@@ -9,7 +9,7 @@
  * drawn but that is not the case. What's really happening is the entire "scene"
  * is being drawn over and over, presenting the illusion of animation.
  *
- * This engine makes the canvas' context (ctx) object globally available to make 
+ * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
 
@@ -23,9 +23,14 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
-
-    canvas.width = 505;
-    canvas.height = 606;
+        // sWidth = screen.width * .8,
+        // sHeight = screen.height;
+        canvas.width = 505;
+        canvas.height = 606;
+        // canvas.width = sWidth;
+        // canvas.height = sHeight;
+        console.log(canvas);
+        ctx.fillRect(50, 50, 50, 50);
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -116,8 +121,11 @@ var Engine = (function(global) {
             ],
             numRows = 6,
             numCols = 5,
+            //increase rows
+            // numRows = sWidth/100 > 6 ? sWidth/100 : 6,
+            // numCols = sHeight/100 > 5 ? sHeight/100: 5,
             row, col;
-        
+
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height)
 
