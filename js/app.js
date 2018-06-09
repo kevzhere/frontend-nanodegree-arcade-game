@@ -1,4 +1,5 @@
 let canvas = document.querySelector("canvas");
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -6,16 +7,27 @@ var Enemy = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.locX = 50;
-    this.locY = 50;
+    this.modifier = Math.floor(Math.random() * 1000)/1000 + 1;
+    this.locX = -50;
+    this.locY = 43 + ((Math.floor(Math.random() * 3) * 85));
+    console.log(this.locY);
     this.sprite = 'images/enemy-bug.png';
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    this.locX = (this.locX + dt * 100) % 505;
+    if(this.locX >= 480){
+        this.locY = 43 + ((Math.floor(Math.random() * 3) * 85));
+        this.modifier = Math.floor(Math.random() * 1000)/2000 + 1;
+    }
+    this.locX = (this.locX + dt * 100 * this.modifier) % 505;
     this.render();
+    if(this.locX - 50 < player.locX && this.locX + 50 > player.locX && this.locY === player.locY){
+        player.locY = 383;
+        player.locX = 202.5;
+        player.render();
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -28,12 +40,15 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function(){
     this.locX = canvas.width / 2 - 50;
+
     this.locY = canvas.height / 2 + 80;
     this.sprite1 = 'images/char-boy.png';
 }
 
-Player.prototype.update = function(dt){
-
+Player.prototype.update = function(){
+    if(this.locY < 0){
+        this.locY = 383;
+    }
 };
 let char;
 Player.prototype.render = function(){
@@ -44,7 +59,7 @@ console.log(Player);
 Player.prototype.handleInput = function(input){
     switch(input){
         case "up":
-            if(this.locY - 85 >= 0){
+            if(this.locY - 85 >= -90){
                 this.locY -= 85;
                 this.render();
             }
