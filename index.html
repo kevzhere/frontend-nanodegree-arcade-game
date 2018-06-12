@@ -2,11 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Effective JavaScript: Frogger</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<p>Score: <span id="score"> 0</span>
+	<div id="container">
+		<div>
+			<p>Score: <span id="score"> 0</span></p>
+		</div>
+		<div class="modifier">
+			<p>
+			<span>Select Your Charactor</span>
+			<span>Select amount of enemies</span>
+			</p>
+		</div>
+		<div class="modifier">
+			<select name="characters" id="char" onChange="changeChar()">
+				<option value="1">Boy</option>
+				<option value="2">Cat Girl</option>
+				<option value="3">Horn Girl</option>
+				<option value="4">Pink Girl</option>
+				<option value="5">Princess</option>
+			</select>
+			<select name="enemies" id="enemy" onChange="changeEnemy()">
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+			</select>
+		</div>
+	</div>
+
     <script src="js/resources.js"></script>
     <script src="js/engine.js"></script>
     <script src="js/app.js"></script>

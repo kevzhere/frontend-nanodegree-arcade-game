@@ -53,7 +53,6 @@
                  * attempts to load this file in the future.
                  */
                 resourceCache[url] = img;
-                console.log(img.height);
 
                 /* Once the image is actually loaded and properly cached,
                  * call all of the onReady() callbacks we have defined.

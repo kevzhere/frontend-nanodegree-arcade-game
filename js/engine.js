@@ -23,15 +23,10 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
-        // sWidth = screen.width * .8,
-        // sHeight = screen.height;
         canvas.width = 505;
         canvas.height = 606;
-        // canvas.width = sWidth;
-        // canvas.height = sHeight;
-        console.log(canvas);
         ctx.fillRect(50, 50, 50, 50);
-    doc.body.appendChild(canvas);
+        doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -84,7 +79,19 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+    }
+
+    function checkCollisions(){
+    	allEnemies.forEach(function(enemy){
+		    if(enemy.locX - 50 < player.locX && enemy.locX + 50 > player.locX && enemy.locY === player.locY){
+		        player.locY = 383;
+		        player.locX = 202.5;
+		        player.render();
+		        player.score = 0;
+
+		    }
+		})
     }
 
     /* This is called by the update function and loops through all of the
@@ -163,19 +170,20 @@ var Engine = (function(global) {
 
         player.render();
     }
-
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
+
+
     Resources.load([
         'images/stone-block.png',
         'images/water-block.png',
@@ -190,4 +198,5 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    global.canvas = canvas;
 })(this);

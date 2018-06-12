@@ -1,3 +1,16 @@
 body {
     text-align: center;
 }
+
+select{
+	margin-left: 10px;
+	width: 150px;
+}
+
+span{
+	margin-left: 10px;
+}
+.modifier{
+	display: inline;
+	text-align: center;
+}
